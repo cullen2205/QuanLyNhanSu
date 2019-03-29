@@ -16,7 +16,7 @@ namespace QuanLyNhanSu
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new QuanLyNhanSu.GUI.frmLogin());
+            Application.Run(new QuanLyNhanSu.GUI.frmNhanVien());
         }
     }
 }

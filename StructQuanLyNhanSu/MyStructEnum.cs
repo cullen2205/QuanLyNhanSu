@@ -8,7 +8,7 @@ namespace QuanLyNhanSu.GUI
 {
     public partial class SQLServer
     {
-        public enum MyEnum
+        public enum MyStructEnum
         {
             DUAN,
             LUONG,
