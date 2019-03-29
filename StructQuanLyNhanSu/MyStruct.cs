@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyNhanSu.GUI
 {
-    public class MyStruct
+    public partial class MyStruct
     {
         public class DUAN
         {
@@ -16,10 +16,10 @@ namespace QuanLyNhanSu.GUI
 	        //[DIADIEM] [nvarchar](50) NULL,
 	        //[TONGSOGIO] [float] NULL,
             public int MADA { get; set; }
-            public int MAPB { get; set; }
+            public int? MAPB { get; set; }
             public string TENDA { get; set; }
             public string DIADIEM { get; set; }
-            public float TONGSOGIO { get; set; }
+            public float? TONGSOGIO { get; set; }
         }
         public class LUONG
         {
@@ -28,9 +28,9 @@ namespace QuanLyNhanSu.GUI
             //[HESOLUONG] [float] NULL,
             //[HESOPHUCAP] [float] NULL,
             public int BACLUONG { get; set; }
-            public int LUONGCOBAN { get; set; }
-            public float HESOLUONG { get; set; }
-            public float HESOPHUCAP { get; set; }
+            public int? LUONGCOBAN { get; set; }
+            public float? HESOLUONG { get; set; }
+            public float? HESOPHUCAP { get; set; }
         }
         public class NHANVIEN
         {
@@ -44,12 +44,12 @@ namespace QuanLyNhanSu.GUI
             //[DIACHI] [nvarchar](50) NULL,
             //[ACCOUNT] [varchar](50) NULL,
             public int MANV { get; set; }
-            public int MAPB { get; set; }
+            public int? MAPB { get; set; }
             public string TENNV { get; set; }
-            public DateTime NGAYSINH { get; set; }
+            public DateTime? NGAYSINH { get; set; }
             public string GIOITINH { get; set; }
-            public int MA_NGS { get; set; }
-            public int BACLUONG { get; set; }
+            public int? MA_NGS { get; set; }
+            public int? BACLUONG { get; set; }
             public string DIACHI { get; set; }
             public string ACCOUNT { get; set; }
         }
@@ -60,7 +60,7 @@ namespace QuanLyNhanSu.GUI
             //	[SOGIO] [float] NULL,
             public int MANV { get; set; }
             public int MADA { get; set; }
-            public float SOGIO { get; set; }
+            public float? SOGIO { get; set; }
         }
         public class PHONGBAN
         {
@@ -71,9 +71,9 @@ namespace QuanLyNhanSu.GUI
             //[NGAYNC] [date] NULL,
             public int MAPB { get; set; }
             public string TENPB { get; set; }
-            public int MATP { get; set; }
+            public int? MATP { get; set; }
             public string DIADIEM { get; set; }
-            public DateTime NGAYNC { get; set; }
+            public DateTime? NGAYNC { get; set; }
         }
         public class TAIKHOAN
         {
