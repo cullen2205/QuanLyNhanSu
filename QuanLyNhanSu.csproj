@@ -49,7 +49,6 @@
     <Compile Include="Query\Delete.cs" />
     <Compile Include="Query\Insert.cs" />
     <Compile Include="SQL\FillTo.cs" />
-    <Compile Include="SQL\GetTableMyStruct.cs" />
     <Compile Include="StructQuanLyNhanSu\MyStruct.cs" />
     <Compile Include="StructQuanLyNhanSu\MyStructEnum.cs" />
     <Compile Include="GUI\frmDuAn.cs">

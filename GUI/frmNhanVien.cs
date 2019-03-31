@@ -15,7 +15,6 @@ namespace QuanLyNhanSu.GUI
     {
         SqlConnection localConnect;
         SqlCommand localCommand = new SqlCommand();
-        public static int SoLuongBanGhi = 0;
         public frmNhanVien()
         {
             InitializeComponent();
@@ -57,7 +56,7 @@ namespace QuanLyNhanSu.GUI
         private bool IsClickAddTwice = false;
         private void btnThem_Click(object sender, EventArgs e)
         {
-            SoLuongBanGhi = this.dgvNhanVien.RowCount;
+            this.txtMaNV.Text = GUI.Insert.NHANVIEN.GetNextIndex().ToString();
             if (IsClickAddTwice)
             {
                 MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
@@ -70,9 +69,12 @@ namespace QuanLyNhanSu.GUI
                 nv.MAPB = int.Parse(this.txtMaPB.Text);
                 nv.ACCOUNT = this.txtTaiKhoan.Text;
                 this.IsClickAddTwice = false;
-                
 
-                GUI.Insert.NHANVIEN.CreateNewRecord(nv, SoLuongBanGhi + 1);
+
+                if (GUI.Insert.NHANVIEN.CreateNewRecord(nv))
+                {
+                    MessageBox.Show("Create success!");
+                }
 
                 this.btnCancel_Click(sender, e);
                 this.btnRefersh_Click(sender, e);
@@ -108,8 +110,25 @@ namespace QuanLyNhanSu.GUI
         {
             if (!string.IsNullOrWhiteSpace(this.txtTimKiem.Text))
             {
-                
+                Find(this.txtTimKiem.Text);
             }
+        }
+        private bool Find(string strSearch)
+        {
+            this.dgvNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            for(int j = 0; j < this.dgvNhanVien.ColumnCount; ++j)
+            {
+                for(int i = 0; i < this.dgvNhanVien.RowCount; ++i)
+                {
+                    if (this.dgvNhanVien.Rows[i].Cells[j].Value.ToString() == strSearch)
+                    {
+                        //dataGridView1.Rows[row].Selected = true;
+                        this.dgvNhanVien.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private void dgvNhanVien_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -148,11 +167,11 @@ namespace QuanLyNhanSu.GUI
             // luu data vào trong sql
             MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
             nv.MANV = int.Parse(this.txtMaNV.Text);
-            nv.TENNV = this.txtTenNV.Text;
-            nv.GIOITINH = this.txtGioiTinh.Text;
+            nv.TENNV = !string.IsNullOrWhiteSpace(this.txtTenNV.Text) ? this.txtTenNV.Text : "Đã bị xoá";
+            nv.GIOITINH = this.txtGioiTinh.Text ?? "Khác";
             nv.NGAYSINH = DateTime.Parse(this.dtpNgaySinh.Text);
-            nv.DIACHI = this.txtDiaChi.Text;
-            nv.BACLUONG = int.Parse(this.txtLuong.Text);
+            nv.DIACHI = this.txtDiaChi.Text ?? " ";
+            nv.BACLUONG = !string.IsNullOrWhiteSpace(this.txtLuong.Text) ? int.Parse(this.txtLuong.Text) : 1;
             nv.MA_NGS = int.Parse(this.txtMaNGS.Text);
             nv.MAPB = int.Parse(this.txtMaPB.Text);
             nv.ACCOUNT = this.txtTaiKhoan.Text;
@@ -166,7 +185,30 @@ namespace QuanLyNhanSu.GUI
         private void btnXoa_Click(object sender, EventArgs e)
         {
             // xoá nhân viên
-            GUI.Delete.NHANVIEN.DeleteOneRecord(int.Parse(this.txtMaNV.Text));
+            if (!GUI.Delete.NHANVIEN.DeleteRecord_Primary(int.Parse(this.txtMaNV.Text)))
+            {
+                if (DialogResult.Yes ==
+                    MessageBox.Show("Cant delete\nCause this record is connecting to the other record!\n\n\nDo you want to delete all of the another record connecting this?? :D ?",
+                    "Can not delete the record!", MessageBoxButtons.YesNo))
+                {
+                    if (GUI.Delete.PHANCONG.DeleteAllRecord_HaveTableX(MyStruct.PHANCONG.enumStruct.MANV, this.txtMaNV.Text)
+                        && GUI.Delete.NHANVIEN.DeleteRecord_Primary(int.Parse(this.txtMaNV.Text)))
+                    {
+                        MessageBox.Show("Delete success!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cant del the record!");
+                    }
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Delete success!");
+            }
+            
+                
 
             this.btnRefersh_Click(sender, e);
             EditInfoMode(false);

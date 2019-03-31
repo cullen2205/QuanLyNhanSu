@@ -89,33 +89,25 @@ namespace QuanLyNhanSu.GUI
         }
         public static class NHANVIEN
         {
-            private static int GetNextIndex()
+            public static int GetNextIndex()
             {
-                //SqlConnection t = SQLServer.GetMySQL();
-                //SqlCommand cm = new SqlCommand(@"select top 1 MAX(MANV) as STTCAONHAT from NHANVIEN order by STTCAONHAT desc");
-                //DbDataReader reader;
+                SqlConnection t = SQLServer.GetMySQL();
+                SqlCommand cm = new SqlCommand(
+                    @"select top 1 MAX(MANV) as STTCAONHAT, TENNV from NHANVIEN group by TENNV order by STTCAONHAT desc");
 
-                //cm.Connection = t;
-                //t.Open();
-                //reader = cm.ExecuteReader();
-                
-                //if (reader.HasRows)
-                //{
-                //    int tam = reader.GetFieldValue<int>(0) + 1;
-                //    t.Close();
-                //    return tam;
-                //}
-                //t.Close();
-                return 1;
+                cm.Connection = t;
+                t.Open();
 
+                int tam = (int)cm.ExecuteScalar() + 1;
+                t.Close();
 
-                //// buggggggggg
+                return tam;
             }
-            public static bool CreateNewRecord(MyStruct.NHANVIEN _new, int _index)
+            public static bool CreateNewRecord(MyStruct.NHANVIEN _new)
             {
                 try
                 {
-                    _new.MANV = _index;
+                    _new.MANV = GetNextIndex();
                     string tam1 = @"insert into NHANVIEN (MANV", tam2 = "";
                     if (_new.MAPB != null)
                     {

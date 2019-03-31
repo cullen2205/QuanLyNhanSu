@@ -130,7 +130,7 @@ namespace QuanLyNhanSu.GUI
                 conn.Close();
                 return t;
             }
-            public static List<MyStruct.NHANVIEN> GetAllRecord()
+            private static List<MyStruct.NHANVIEN> GetAllRecord()
             {
                 cmd.CommandText = @"select MANV, MAPB, TENNV, NGAYSINH, GIOITINH, MA_NGS, BACLUONG, DIACHI, ACCOUNT from NHANVIEN";
                 cmd.Connection = conn;
