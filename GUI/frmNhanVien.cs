@@ -115,17 +115,29 @@ namespace QuanLyNhanSu.GUI
         }
         private bool Find(string strSearch)
         {
-            this.dgvNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             for(int j = 0; j < this.dgvNhanVien.ColumnCount; ++j)
             {
                 for(int i = 0; i < this.dgvNhanVien.RowCount; ++i)
                 {
-                    if (this.dgvNhanVien.Rows[i].Cells[j].Value.ToString() == strSearch)
+                    try
                     {
-                        //dataGridView1.Rows[row].Selected = true;
-                        this.dgvNhanVien.Rows[i].DefaultCellStyle.BackColor = Color.Red;
-                        return true;
+                        if (this.dgvNhanVien.Rows[i].Cells[j].Value.ToString() == strSearch)
+                        {
+                            //dataGridView1.Rows[row].Selected = true;
+                            this.dgvNhanVien.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                            return true;
+                        }
+                        if (3 <= j && j <= 7)
+                        {
+                            j = 7;
+                            break;
+                        }
                     }
+                    catch
+                    {
+                        continue;
+                    }
+                    
                 }
             }
             return false;
