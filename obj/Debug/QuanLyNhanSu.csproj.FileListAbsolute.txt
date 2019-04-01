@@ -29,3 +29,19 @@ E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\o
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.csproj.GenerateResource.Cache
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.exe
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.pdb
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\bin\Debug\QuanLyNhanSu.exe.config
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\bin\Debug\QuanLyNhanSu.exe
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\bin\Debug\QuanLyNhanSu.pdb
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.csprojAssemblyReference.cache
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.frmDuAn.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.frmLogin.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.frmMain.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.frmNhanVien.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.frmPhanCong.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.frmPhongBan.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.GUI.LoginSQL.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.Properties.Resources.resources
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.csproj.GenerateResource.cache
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.csproj.CoreCompileInputs.cache
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.exe
+C:\Users\Kieu Thuong\Source\Repos\QuanLyNhanSu2\obj\Debug\QuanLyNhanSu.pdb
