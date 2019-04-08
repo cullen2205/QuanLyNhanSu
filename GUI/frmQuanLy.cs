@@ -230,6 +230,7 @@ namespace QuanLyNhanSu.GUI
             try
             {
                 int itam = 0;
+                bool bSuccess = false;
 
                 switch (_tablename)
                 {
@@ -249,7 +250,7 @@ namespace QuanLyNhanSu.GUI
                         itam = llabel.FindIndex(n => string.Equals(n.Text, @"TONGSOGIO"));
                         da.TONGSOGIO = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
 
-                        GUI.Update.DUAN.UpdateOneRecord(da);
+                        bSuccess = GUI.Update.DUAN.UpdateOneRecord(da);
                         break;
                     case MyStruct.MyTableName.LUONG:
                         MyStruct.LUONG lg = new MyStruct.LUONG();
@@ -264,7 +265,7 @@ namespace QuanLyNhanSu.GUI
                         itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOPHUCAP"));
                         lg.HESOPHUCAP = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
 
-                        GUI.Update.LUONG.UpdateOneRecord(lg);
+                        bSuccess = GUI.Update.LUONG.UpdateOneRecord(lg);
                         break;
                     case MyStruct.MyTableName.NHANVIEN:
                         MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
@@ -287,7 +288,8 @@ namespace QuanLyNhanSu.GUI
                         nv.BACLUONG = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"))].Text);
                         nv.DIACHI = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIACHI"))].Text;
                         nv.ACCOUNT = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"))].Text;
-                        GUI.Update.NHANVIEN.UpdateOneRecord(nv);
+
+                        bSuccess = GUI.Update.NHANVIEN.UpdateOneRecord(nv);
                         break;
                     case MyStruct.MyTableName.PHANCONG:
                         MyStruct.PHANCONG pc = new MyStruct.PHANCONG();
@@ -295,7 +297,8 @@ namespace QuanLyNhanSu.GUI
                         pc.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
 
                         pc.SOGIO = float.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"SOGIO"))].Text);
-                        GUI.Update.PHANCONG.UpdateOneRecord(pc);
+
+                        bSuccess = GUI.Update.PHANCONG.UpdateOneRecord(pc);
                         break;
                     case MyStruct.MyTableName.PHONGBAN:
                         MyStruct.PHONGBAN pb = new MyStruct.PHONGBAN();
@@ -305,7 +308,7 @@ namespace QuanLyNhanSu.GUI
                         pb.DIADIEM = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"))].Text;
                         pb.NGAYNC = DateTime.Parse(DateTime.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"NGAYNC"))].Text).ToShortDateString());
 
-                        GUI.Update.PHONGBAN.UpdateOneRecord(pb);
+                        bSuccess = GUI.Update.PHONGBAN.UpdateOneRecord(pb);
                         break;
                     case MyStruct.MyTableName.TAIKHOAN:
                         MyStruct.TAIKHOAN tk = new MyStruct.TAIKHOAN();
@@ -313,12 +316,15 @@ namespace QuanLyNhanSu.GUI
                         tk.PASSWORD = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"PASSWORD"))].Text;
                         tk.ACCESS = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCESS"))].Text;
 
-                        GUI.Update.TAIKHOAN.UpdateOneRecord(tk);
+                        bSuccess = GUI.Update.TAIKHOAN.UpdateOneRecord(tk);
                         break;
                     default:
                         break;
                 }
-                MessageBox.Show(@"Update thành công!");
+                if (bSuccess)
+                {
+                    MessageBox.Show("Update thành công !");
+                }
             }
             catch
             {
@@ -331,10 +337,14 @@ namespace QuanLyNhanSu.GUI
 
         private void button8_Thoat_Click(object sender, EventArgs e)
         {
-            //Type qq = dataGridView1.Columns["NGAYSINH"].GetType();
-            Type qq = new GUI.MyStruct.NHANVIEN().NGAYSINH.GetType();
-            this.textBox1.Text = qq.Name;
+            Program.fmain.Show();
+            this.Dispose();
         }
-        
+
+        private void frmQuanLy_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Program.fmain.Show();
+            this.Dispose();
+        }
     }
 }

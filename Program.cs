@@ -16,7 +16,12 @@ namespace QuanLyNhanSu
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new QuanLyNhanSu.GUI.frmQuanLy(GUI.MyStruct.MyTableName.PHONGBAN));
+
+
+            fmain = new GUI.frmMain();
+
+            Application.Run(fmain);
         }
+        public static GUI.frmMain fmain;
     }
 }
