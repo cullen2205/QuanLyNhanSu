@@ -16,7 +16,7 @@ namespace QuanLyNhanSu.GUI
 
         /// <summary>
         /// 
-        /// Do nothing without add string to string
+        /// Do nothing without Add string to string
         /// exaple:
         ///     _root = "update DUAN set "
         ///     list[0] = "MADA = value"

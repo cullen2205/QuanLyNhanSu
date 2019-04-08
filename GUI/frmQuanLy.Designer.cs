@@ -30,6 +30,7 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button8_Thoat = new System.Windows.Forms.Button();
             this.button4_ThayDoi = new System.Windows.Forms.Button();
             this.button7_HuyBo = new System.Windows.Forms.Button();
             this.button6_Xoa = new System.Windows.Forms.Button();
@@ -53,10 +54,11 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(744, 405);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
+            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button8_Thoat);
             this.groupBox1.Controls.Add(this.button4_ThayDoi);
             this.groupBox1.Controls.Add(this.button7_HuyBo);
             this.groupBox1.Controls.Add(this.button6_Xoa);
@@ -67,6 +69,16 @@
             this.groupBox1.Size = new System.Drawing.Size(284, 162);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
+            // 
+            // button8_Thoat
+            // 
+            this.button8_Thoat.Location = new System.Drawing.Point(6, 109);
+            this.button8_Thoat.Name = "button8_Thoat";
+            this.button8_Thoat.Size = new System.Drawing.Size(126, 39);
+            this.button8_Thoat.TabIndex = 9;
+            this.button8_Thoat.Text = "Thoát";
+            this.button8_Thoat.UseVisualStyleBackColor = true;
+            this.button8_Thoat.Click += new System.EventHandler(this.button8_Thoat_Click);
             // 
             // button4_ThayDoi
             // 
@@ -96,6 +108,7 @@
             this.button6_Xoa.TabIndex = 7;
             this.button6_Xoa.Text = "Xoá";
             this.button6_Xoa.UseVisualStyleBackColor = true;
+            this.button6_Xoa.Click += new System.EventHandler(this.button6_Xoa_Click);
             // 
             // button5_LuuThayDoi
             // 
@@ -105,6 +118,7 @@
             this.button5_LuuThayDoi.TabIndex = 6;
             this.button5_LuuThayDoi.Text = "Lưu thay đổi";
             this.button5_LuuThayDoi.UseVisualStyleBackColor = true;
+            this.button5_LuuThayDoi.Click += new System.EventHandler(this.button5_LuuThayDoi_Click);
             // 
             // button3_Them
             // 
@@ -195,5 +209,6 @@
         private System.Windows.Forms.Button button5_LuuThayDoi;
         private System.Windows.Forms.Button button4_ThayDoi;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button button8_Thoat;
     }
 }

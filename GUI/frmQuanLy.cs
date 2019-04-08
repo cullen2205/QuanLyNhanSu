@@ -12,8 +12,11 @@ namespace QuanLyNhanSu.GUI
 {
     public partial class frmQuanLy : Form
     {
+        // mỗi label đi kèm với một textbox
         private List<TextBox> ltextbox = new List<TextBox>();
         private List<Label> llabel = new List<Label>();
+        private List<DateTimePicker> ldatetimepicker = new List<DateTimePicker>();
+
         private Point _locationNextTextBox;
         private bool FirstLoadDataGridViews = false;
 
@@ -31,6 +34,24 @@ namespace QuanLyNhanSu.GUI
 
             _tablename = nameTable;
         }
+
+        private void ChangeValues_DateTimePicker(object sender, EventArgs e)
+        {
+            int i = llabel.FindIndex(m => string.Equals(m.Text, "NGAYNC"));
+            if(i > -1)
+            {
+                ltextbox[i].Text = ldatetimepicker[0].Value.ToShortDateString();
+                return;
+            }
+
+            i = llabel.FindIndex(m => string.Equals(m.Text, "NGAYSINH"));
+            if ( i > -1)
+            {
+                ltextbox[i].Text = ldatetimepicker[0].Value.ToShortDateString();
+                return;
+            }
+        }
+
         private void QuanLy_Load(object sender, EventArgs e)
         {
             this.Text = @"Quản lý " + _tablename.ToString();
@@ -40,19 +61,16 @@ namespace QuanLyNhanSu.GUI
 
             _locationNextTextBox = this.groupBox3.Location;
 
-            Label lb;
-            TextBox tb;
-
             for (int i = 0; i < this.dataGridView1.ColumnCount; i++)
             {
                 // tạo label mới hiển thị nhãn
-                lb = new Label();
+                Label lb = new Label();
                 lb.Text = this.dataGridView1.Columns[i].Name;
                 lb.AutoSize = true;
                 lb.Size = new System.Drawing.Size(35, 13);
 
                 // tạo một textbox mới hiển thị giá trị
-                tb = new TextBox();
+                TextBox tb = new TextBox();
                 tb.Size = new System.Drawing.Size(160, 20);
                 tb.Enabled = false;
 
@@ -65,10 +83,37 @@ namespace QuanLyNhanSu.GUI
                 this.groupBox3.Controls.Add(lb);
                 this.groupBox3.Controls.Add(tb);
 
+                // nếu gặp kiểu dữ liệu datetime sẽ gán thêm một ô datatimepicker
+                if (string.Equals(dataGridView1.Columns[i].Name, "NGAYNC")
+                        || string.Equals(dataGridView1.Columns[i].Name, "NGAYSINH"))
+                {
+                    // tạo một kiểu DateTimePicker để gán ngày
+                    DateTimePicker dtp = new DateTimePicker();
+                    dtp.Value = DateTime.Now;
+                    dtp.Size = new Size(20, 20);
+                    dtp.Location = new Point(_locationNextTextBox.X + 90 + 140, _locationNextTextBox.Y - 190);
+
+                    tb.Size = new System.Drawing.Size(130, 20);
+
+                    ldatetimepicker.Add(dtp);
+                    dtp.ValueChanged += new System.EventHandler(this.ChangeValues_DateTimePicker);
+
+
+                    this.groupBox3.Controls.Add(dtp);
+                }
+
                 // thêm vào danh sách
                 llabel.Add(lb);
                 ltextbox.Add(tb);
             }
+
+            // chỉnh trạng thái cho mấy cái datetimepicker
+            for (int i = 0; i < ldatetimepicker.Count; i++)
+            {
+                ldatetimepicker[i].Enabled = false;
+            }
+
+            return;
         }
 
         /// <summary>
@@ -79,7 +124,9 @@ namespace QuanLyNhanSu.GUI
         /// <param name="_bState_Hide"></param>
         private void EditMode(bool _bState_Hide = true)
         {
-            button5_LuuThayDoi.Enabled = button7_HuyBo.Enabled = !_bState_Hide;
+            button5_LuuThayDoi.Enabled 
+                = button7_HuyBo.Enabled 
+                = !_bState_Hide;
         }
 
         /// <summary>
@@ -102,7 +149,7 @@ namespace QuanLyNhanSu.GUI
             EditMode(false);
             StateAll_ListTextBox(ref ltextbox, true);
 
-            // Chỉnh những bảng nào ko được phép sửa (VD: Khoá chính)
+            // Chỉnh những dòng nào ko được phép sửa (VD: Khoá chính)
             switch (_tablename)
             {
                 case MyStruct.MyTableName.DUAN:
@@ -118,12 +165,23 @@ namespace QuanLyNhanSu.GUI
                 default:
                     break;
             }
+            
+            // nếu có các nút thay đổi ngày tháng
+            for (int i = 0; i < ldatetimepicker.Count; i++)
+            {
+                ldatetimepicker[i].Enabled = true;
+            }
         }
 
         private void button7_HuyBo_Click(object sender, EventArgs e)
         {
             EditMode(true);
             StateAll_ListTextBox(ref ltextbox, false);
+
+            for (int i = 0; i < ldatetimepicker.Count; i++)
+            {
+                ldatetimepicker[i].Enabled = false;
+            }
         }
 
         private void button3_Them_Click(object sender, EventArgs e)
@@ -131,20 +189,152 @@ namespace QuanLyNhanSu.GUI
 
         }
 
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (FirstLoadDataGridViews)
-            {
-                for (int i = 0; i < this.dataGridView1.ColumnCount; i++)
-                {
-                    ltextbox[i].Text = this.dataGridView1.SelectedRows[0].Cells[i].Value.ToString();
-                }
-            }
-        }
-
         private void button2_LamMoi_Click(object sender, EventArgs e)
         {
             GUI.FillTo.DataGridViews(_tablename.ToString(), ref this.dataGridView1);
         }
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            // khi vào một hàng bất kỳ -> in dữ liệu ra textbox
+            if (FirstLoadDataGridViews && e.RowIndex > -1 && e.RowIndex < this.dataGridView1.RowCount)
+            {
+                try
+                {
+                    int j = 0;
+                    for (int i = 0; i < this.dataGridView1.ColumnCount; i++)
+                    {
+                        ltextbox[i].Text = this.dataGridView1.SelectedRows[0].Cells[i].Value.ToString();
+                        if (string.Equals(dataGridView1.Columns[i].Name, "NGAYNC")
+                                || string.Equals(dataGridView1.Columns[i].Name, "NGAYSINH"))
+                        {
+                            ldatetimepicker[j].Value = DateTime.Parse(ltextbox[i].Text);
+                        }
+                    }
+                }
+                catch
+                {
+                    // bắt lỗi nếu ô đang chọn không nằm trong khoảng dữ liệu hiển thị
+                    //
+                }
+                
+            }
+        }
+
+        private void button6_Xoa_Click(object sender, EventArgs e)
+        {
+            
+        }
+        private void button5_LuuThayDoi_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int itam = 0;
+
+                switch (_tablename)
+                {
+                    case MyStruct.MyTableName.DUAN:
+                        GUI.MyStruct.DUAN da = new MyStruct.DUAN();
+                        da.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
+                        da.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENDA"));
+                        da.TENDA = string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text;
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"));
+                        da.DIADIEM = string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text;
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"TONGSOGIO"));
+                        da.TONGSOGIO = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                        GUI.Update.DUAN.UpdateOneRecord(da);
+                        break;
+                    case MyStruct.MyTableName.LUONG:
+                        MyStruct.LUONG lg = new MyStruct.LUONG();
+                        lg.BACLUONG = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"BACLUONG"].Value.ToString());
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"LUONGCOBAN"));
+                        lg.LUONGCOBAN = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOLUONG"));
+                        lg.HESOLUONG = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOPHUCAP"));
+                        lg.HESOPHUCAP = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                        GUI.Update.LUONG.UpdateOneRecord(lg);
+                        break;
+                    case MyStruct.MyTableName.NHANVIEN:
+                        MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
+                        nv.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
+                        nv.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENNV"));
+                        nv.TENNV = ltextbox[itam].Text;
+
+                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"NGAYSINH"));
+                        string stam = string.IsNullOrWhiteSpace(ltextbox[itam].Text)
+                                        ? new DateTime(2000,1,1).ToShortDateString()
+                                        : ltextbox[itam].Text;
+                        nv.NGAYSINH = DateTime.Parse(stam);
+
+                        nv.GIOITINH = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"GIOITINH"))].Text;
+                        nv.MA_NGS = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MA_NGS"))].Text);
+                        nv.BACLUONG = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"))].Text);
+                        nv.DIACHI = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIACHI"))].Text;
+                        nv.ACCOUNT = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"))].Text;
+                        GUI.Update.NHANVIEN.UpdateOneRecord(nv);
+                        break;
+                    case MyStruct.MyTableName.PHANCONG:
+                        MyStruct.PHANCONG pc = new MyStruct.PHANCONG();
+                        pc.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
+                        pc.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
+
+                        pc.SOGIO = float.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"SOGIO"))].Text);
+                        GUI.Update.PHANCONG.UpdateOneRecord(pc);
+                        break;
+                    case MyStruct.MyTableName.PHONGBAN:
+                        MyStruct.PHONGBAN pb = new MyStruct.PHONGBAN();
+                        pb.MAPB = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MAPB"].Value.ToString());
+                        pb.TENPB = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"TENPB"))].Text;
+                        pb.MATP = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MATP"))].Text);
+                        pb.DIADIEM = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"))].Text;
+                        pb.NGAYNC = DateTime.Parse(DateTime.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"NGAYNC"))].Text).ToShortDateString());
+
+                        GUI.Update.PHONGBAN.UpdateOneRecord(pb);
+                        break;
+                    case MyStruct.MyTableName.TAIKHOAN:
+                        MyStruct.TAIKHOAN tk = new MyStruct.TAIKHOAN();
+                        tk.ACCOUNT = this.dataGridView1.SelectedRows[0].Cells[@"ACCOUNT"].Value.ToString();
+                        tk.PASSWORD = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"PASSWORD"))].Text;
+                        tk.ACCESS = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCESS"))].Text;
+
+                        GUI.Update.TAIKHOAN.UpdateOneRecord(tk);
+                        break;
+                    default:
+                        break;
+                }
+                MessageBox.Show(@"Update thành công!");
+            }
+            catch
+            {
+                MessageBox.Show("Không thể lưu bản ghi\n\nMột thuộc tính bị trống, xin hãy kiểm tra lại!");
+            }
+
+            this.button7_HuyBo_Click(sender, e);
+            return;
+        }
+
+        private void button8_Thoat_Click(object sender, EventArgs e)
+        {
+            //Type qq = dataGridView1.Columns["NGAYSINH"].GetType();
+            Type qq = new GUI.MyStruct.NHANVIEN().NGAYSINH.GetType();
+            this.textBox1.Text = qq.Name;
+        }
+        
     }
 }
