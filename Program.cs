@@ -16,7 +16,7 @@ namespace QuanLyNhanSu
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new QuanLyNhanSu.GUI.frmNhanVien());
+            Application.Run(new QuanLyNhanSu.GUI.frmQuanLy(GUI.MyStruct.MyTableName.NHANVIEN));
         }
     }
 }

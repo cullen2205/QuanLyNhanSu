@@ -24,8 +24,8 @@ E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\o
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmNhanVien.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmPhanCong.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmPhongBan.resources
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.LoginSQL.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.Properties.Resources.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.csproj.GenerateResource.Cache
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.exe
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.pdb
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmQuanLy.resources

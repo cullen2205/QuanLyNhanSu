@@ -15,6 +15,7 @@ namespace QuanLyNhanSu.GUI
         public frmMain()
         {
             InitializeComponent();
+            this.MaximizeBox = this.MinimizeBox = false;
         }
     }
 }
