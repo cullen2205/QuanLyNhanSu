@@ -15,6 +15,20 @@ namespace QuanLyNhanSu.GUI
         private static SqlCommand cmd = new SqlCommand();
         public static class DUAN
         {
+            public static int GetNextIndex()
+            {
+                SqlConnection t = SQLServer.GetMySQL();
+                SqlCommand cm = new SqlCommand(
+                    @"select top 1 MAX(MADA) as STTCAONHAT from DUAN order by STTCAONHAT desc");
+
+                cm.Connection = t;
+                t.Open();
+
+                int tam = (int)cm.ExecuteScalar() + 1;
+                t.Close();
+
+                return tam;
+            }
             public static bool CreateNewRecord(MyStruct.DUAN _new)
             {
                 try
@@ -61,15 +75,42 @@ namespace QuanLyNhanSu.GUI
         }
         public static class LUONG
         {
+            public static int GetNextIndex()
+            {
+                SqlConnection t = SQLServer.GetMySQL();
+                SqlCommand cm = new SqlCommand(
+                    @"select top 1 MAX(BACLUONG) as STTCAONHAT from LUONG order by STTCAONHAT desc");
+
+                cm.Connection = t;
+                t.Open();
+
+                int tam = (int)cm.ExecuteScalar() + 1;
+                t.Close();
+
+                return tam;
+            }
             public static bool CreateNewRecord(MyStruct.LUONG _new)
             {
                 try
                 {
-                    string tam1 = @"insert into NHANVIEN (MANV";
-                    if (true)
+                    string tam1 = @"insert into LUONG (BACLUONG";
+                    string tam2 = "";
+                    if (_new.LUONGCOBAN != null)
                     {
-
+                        tam1 += @", LUONGCOBAN";
+                        tam2 += @", " + _new.LUONGCOBAN;
                     }
+                    if (_new.HESOLUONG != null)
+                    {
+                        tam1 += @", HESOLUONG";
+                        tam2 += @", " + _new.HESOLUONG + "";
+                    }
+                    if (_new.HESOPHUCAP != null)
+                    {
+                        tam1 += @", HESOPHUCAP";
+                        tam2 += @", " + _new.HESOPHUCAP + "";
+                    }
+                    tam1 += @") values (" + _new.BACLUONG + tam2 + ")";
 
                     cmd.CommandText = tam1;
 
@@ -93,7 +134,7 @@ namespace QuanLyNhanSu.GUI
             {
                 SqlConnection t = SQLServer.GetMySQL();
                 SqlCommand cm = new SqlCommand(
-                    @"select top 1 MAX(MANV) as STTCAONHAT, TENNV from NHANVIEN group by TENNV order by STTCAONHAT desc");
+                    @"select top 1 MAX(MANV) as STTCAONHAT from NHANVIEN order by STTCAONHAT desc");
 
                 cm.Connection = t;
                 t.Open();
@@ -174,11 +215,13 @@ namespace QuanLyNhanSu.GUI
             {
                 try
                 {
-                    string tam1 = @"insert into NHANVIEN (MANV";
-                    if (true)
+                    string tam1 = @"insert into PHANCONG (MANV, MADA", tam2 = "";
+                    if (_new.SOGIO != null)
                     {
-
+                        tam1 += @", SOGIO";
+                        tam2 += @", " + _new.SOGIO;
                     }
+                    tam1 += ") values (" + _new.MANV + "," + _new.MADA + tam2 + ")";
 
                     cmd.CommandText = tam1;
 
@@ -198,15 +241,46 @@ namespace QuanLyNhanSu.GUI
         }
         public static class PHONGBAN
         {
+            public static int GetNextIndex()
+            {
+                SqlConnection t = SQLServer.GetMySQL();
+                SqlCommand cm = new SqlCommand(
+                    @"select top 1 MAX(MAPB) as STTCAONHAT from PHONGBAN order by STTCAONHAT desc");
+
+                cm.Connection = t;
+                t.Open();
+
+                int tam = (int)cm.ExecuteScalar() + 1;
+                t.Close();
+
+                return tam;
+            }
             public static bool CreateNewRecord(MyStruct.PHONGBAN _new)
             {
                 try
                 {
-                    string tam1 = @"insert into NHANVIEN (MANV";
-                    if (true)
+                    string tam1 = @"insert into PHONGBAN (MAPB", tam2 = "";
+                    if (!string.IsNullOrEmpty(_new.TENPB))
                     {
-
+                        tam1 += @", TENPB";
+                        tam2 += @", N'" + _new.TENPB + "'";
                     }
+                    if (_new.MATP != null)
+                    {
+                        tam1 += @", MATP";
+                        tam2 += @", " + _new.MATP;
+                    }
+                    if (!string.IsNullOrEmpty(_new.DIADIEM))
+                    {
+                        tam1 += @", DIADIEM";
+                        tam2 += @", N'" + _new.DIADIEM + "'";
+                    }
+                    if (_new.NGAYNC != null)
+                    {
+                        tam1 += @", NGAYNC";
+                        tam2 += @", N'" + (DateTime.Parse(_new.NGAYNC.ToString())).ToShortDateString().ToString() + "'";
+                    }
+                    tam1 += ") values (" + _new.MAPB + tam2 + ")";
 
                     cmd.CommandText = tam1;
 
@@ -230,11 +304,19 @@ namespace QuanLyNhanSu.GUI
             {
                 try
                 {
-                    string tam1 = @"insert into NHANVIEN (MANV";
-                    if (true)
+                    string tam1 = @"insert into TAIKHOAN (ACCOUNT", tam2 = "";
+                    if (!string.IsNullOrEmpty(_new.PASSWORD))
                     {
-
+                        tam1 += @", PASSWORD";
+                        tam2 += @", N'" + _new.PASSWORD + "'";
                     }
+                    if (!string.IsNullOrEmpty(_new.ACCESS))
+                    {
+                        tam1 += @", ACCESS";
+                        tam2 += @", N'" + _new.ACCESS + "'";
+                    }
+                    tam1 += ") values (" + _new.ACCOUNT + tam2 + ")";
+
                     cmd.CommandText = tam1;
 
                     cmd.Connection = conn;

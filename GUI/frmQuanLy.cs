@@ -35,6 +35,13 @@ namespace QuanLyNhanSu.GUI
             _tablename = nameTable;
         }
 
+        /// <summary>
+        /// 
+        /// Cái này để để gán giá trị cho mấy cái textbox khi có sự kiện thay đổi giá trị của thằng DataTimePicker
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChangeValues_DateTimePicker(object sender, EventArgs e)
         {
             int i = llabel.FindIndex(m => string.Equals(m.Text, "NGAYNC"));
@@ -49,6 +56,117 @@ namespace QuanLyNhanSu.GUI
             {
                 ltextbox[i].Text = ldatetimepicker[0].Value.ToShortDateString();
                 return;
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// Làm rỗng input của tất cả textbox thuộc list<TextBox>
+        /// 
+        /// </summary>
+        /// <param name="lt"></param>
+        private void InitInput_Textbox(ref List<TextBox> lt)
+        {
+            for (int i = 0; i < lt.Count; i++)
+            {
+                lt[i].Text = "";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// Hàm này để gán giá trị của các textbox trong list<textbox> vào từng kiểu dữ liệu tương ứng
+        /// 
+        /// </summary>
+        /// <param name="lt"></param>
+        /// <param name="TableName"></param>
+        /// <returns></returns>
+        private object AddData_FromListTextbox_ToObject(ref List<TextBox> lt, MyStruct.MyTableName TableName)
+        {
+            int itam = 0;
+
+            switch (TableName)
+            {
+                case MyStruct.MyTableName.DUAN:
+                    GUI.MyStruct.DUAN da = new MyStruct.DUAN();
+                    da.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
+                    da.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENDA"));
+                    da.TENDA = string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"));
+                    da.DIADIEM = string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"TONGSOGIO"));
+                    da.TONGSOGIO = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+                    
+                    return da;
+                case MyStruct.MyTableName.LUONG:
+                    MyStruct.LUONG lg = new MyStruct.LUONG();
+                    lg.BACLUONG = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"BACLUONG"].Value.ToString());
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"LUONGCOBAN"));
+                    lg.LUONGCOBAN = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOLUONG"));
+                    lg.HESOLUONG = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOPHUCAP"));
+                    lg.HESOPHUCAP = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+                    
+                    return lg;
+                case MyStruct.MyTableName.NHANVIEN:
+                    MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
+                    nv.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
+                    nv.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENNV"));
+                    nv.TENNV = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"NGAYSINH"));
+                    string stam = string.IsNullOrWhiteSpace(ltextbox[itam].Text)
+                                    ? new DateTime(2000, 1, 1).ToShortDateString()
+                                    : ltextbox[itam].Text;
+                    nv.NGAYSINH = DateTime.Parse(stam);
+
+                    nv.GIOITINH = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"GIOITINH"))].Text;
+                    nv.MA_NGS = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MA_NGS"))].Text);
+                    nv.BACLUONG = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"))].Text);
+                    nv.DIACHI = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIACHI"))].Text;
+                    nv.ACCOUNT = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"))].Text;
+                    
+                    return nv;
+                case MyStruct.MyTableName.PHANCONG:
+                    MyStruct.PHANCONG pc = new MyStruct.PHANCONG();
+                    pc.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
+                    pc.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
+
+                    pc.SOGIO = float.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"SOGIO"))].Text);
+                    
+                    return pc;
+                case MyStruct.MyTableName.PHONGBAN:
+                    MyStruct.PHONGBAN pb = new MyStruct.PHONGBAN();
+                    pb.MAPB = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MAPB"].Value.ToString());
+                    pb.TENPB = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"TENPB"))].Text;
+                    pb.MATP = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MATP"))].Text);
+                    pb.DIADIEM = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"))].Text;
+                    pb.NGAYNC = DateTime.Parse(DateTime.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"NGAYNC"))].Text).ToShortDateString());
+                    
+                    return pb;
+                case MyStruct.MyTableName.TAIKHOAN:
+                    MyStruct.TAIKHOAN tk = new MyStruct.TAIKHOAN();
+                    tk.ACCOUNT = this.dataGridView1.SelectedRows[0].Cells[@"ACCOUNT"].Value.ToString();
+                    tk.PASSWORD = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"PASSWORD"))].Text;
+                    tk.ACCESS = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCESS"))].Text;
+                    
+                    return tk;
+                default:
+                    return null;
             }
         }
 
@@ -107,11 +225,7 @@ namespace QuanLyNhanSu.GUI
                 ltextbox.Add(tb);
             }
 
-            // chỉnh trạng thái cho mấy cái datetimepicker
-            for (int i = 0; i < ldatetimepicker.Count; i++)
-            {
-                ldatetimepicker[i].Enabled = false;
-            }
+            StateAll_ListDateTimePicker(ref ldatetimepicker, true);
 
             return;
         }
@@ -131,7 +245,7 @@ namespace QuanLyNhanSu.GUI
 
         /// <summary>
         /// 
-        /// Sửa trạng thái hoạt động cho tất cả textbox 
+        /// Sửa trạng thái hoạt động cho tất cả TextBox 
         /// 
         /// </summary>
         /// <param name="lt"></param>
@@ -141,6 +255,21 @@ namespace QuanLyNhanSu.GUI
             for (int i = 0; i < lt.Count; i++)
             {
                 lt[i].Enabled = _EditMode;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// Sửa trạng thái hoạt động cho tất cả DateTimePicker
+        /// 
+        /// </summary>
+        /// <param name="ldtp"></param>
+        /// <param name="_EditMode"></param>
+        private void StateAll_ListDateTimePicker(ref List<DateTimePicker> ldtp, bool _EditMode = true)
+        {
+            for (int i = 0; i < ldtp.Count; i++)
+            {
+                ldtp[i].Enabled = _EditMode;
             }
         }
 
@@ -184,9 +313,111 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        private bool bClickButtonThemYet = false;
         private void button3_Them_Click(object sender, EventArgs e)
         {
+            if (!bClickButtonThemYet)
+            {
+                // Đổi trạng thái chặn cái nút bấm khác + thay đổi thông tin
+                button3_Them.Text = "Lưu mới";
+                bClickButtonThemYet = true;
+                button4_ThayDoi.Enabled = button5_LuuThayDoi.Enabled = button6_Xoa.Enabled = false;
 
+                // làm rỗng input để điền thông tin mới vào nè
+                this.InitInput_Textbox(ref ltextbox);
+                StateAll_ListTextBox(ref ltextbox, true);
+                StateAll_ListDateTimePicker(ref ldatetimepicker, true);
+
+                // Chỉnh những dòng nào ko được phép sửa (VD: Khoá chính) + tự động cấp mã cho bản ghi mới
+                switch (_tablename)
+                {
+                    case MyStruct.MyTableName.DUAN:
+                        ltextbox[0].Text = GUI.Insert.DUAN.GetNextIndex().ToString();
+                        ltextbox[0].Enabled = false;
+                        break;
+                    case MyStruct.MyTableName.LUONG:
+                        ltextbox[0].Text = GUI.Insert.LUONG.GetNextIndex().ToString();
+                        ltextbox[0].Enabled = false;
+                        break;
+                    case MyStruct.MyTableName.NHANVIEN:
+                        ltextbox[0].Text = GUI.Insert.NHANVIEN.GetNextIndex().ToString();
+                        ltextbox[0].Enabled = false;
+                        break;
+                    case MyStruct.MyTableName.PHONGBAN:
+                        ltextbox[0].Text = GUI.Insert.PHONGBAN.GetNextIndex().ToString();
+                        ltextbox[0].Enabled = false;
+                        break;
+                    case MyStruct.MyTableName.TAIKHOAN:
+                    case MyStruct.MyTableName.PHANCONG:
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                // Đổi trạng thái chặn cái nút bấm khác + thay đổi thông tin
+                bClickButtonThemYet = false;
+                button3_Them.Text = "Thêm";
+                EditMode(true);
+
+                // cái này để lưu bản ghi đã nhập vào trong Database nè
+                bool bSuccess = false;
+                switch (_tablename)
+                {
+                    case MyStruct.MyTableName.DUAN:
+                        MyStruct.DUAN da = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.DUAN;
+                        bSuccess = GUI.Insert.DUAN.CreateNewRecord(da);
+                        break;
+
+                    case MyStruct.MyTableName.LUONG:
+                        MyStruct.LUONG lg = AddData_FromListTextbox_ToObject
+                                                (ref ltextbox, MyStruct.MyTableName.LUONG)
+                                                as MyStruct.LUONG;
+                        bSuccess = GUI.Insert.LUONG.CreateNewRecord(lg);
+                        break;
+
+                    case MyStruct.MyTableName.NHANVIEN:
+                        MyStruct.NHANVIEN nv = AddData_FromListTextbox_ToObject
+                                                (ref ltextbox, MyStruct.MyTableName.NHANVIEN) 
+                                                as MyStruct.NHANVIEN;
+                        bSuccess = GUI.Insert.NHANVIEN.CreateNewRecord(nv);
+                        break;
+
+                    case MyStruct.MyTableName.PHANCONG:
+                        MyStruct.PHANCONG pc = AddData_FromListTextbox_ToObject
+                                                (ref ltextbox, MyStruct.MyTableName.PHANCONG) 
+                                                as MyStruct.PHANCONG;
+                        bSuccess = GUI.Insert.PHANCONG.CreateNewRecord(pc);
+                        break;
+
+                    case MyStruct.MyTableName.PHONGBAN:
+                        MyStruct.PHONGBAN pb = AddData_FromListTextbox_ToObject
+                                                (ref ltextbox, MyStruct.MyTableName.PHONGBAN) 
+                                                as MyStruct.PHONGBAN;
+                        bSuccess = GUI.Insert.PHONGBAN.CreateNewRecord(pb);
+                        break;
+
+                    case MyStruct.MyTableName.TAIKHOAN:
+                        MyStruct.TAIKHOAN tk = AddData_FromListTextbox_ToObject
+                                                (ref ltextbox, MyStruct.MyTableName.TAIKHOAN) 
+                                                as MyStruct.TAIKHOAN;
+                        bSuccess = GUI.Insert.TAIKHOAN.CreateNewRecord(tk);
+                        break;
+
+                    default:
+                        break;
+                }
+
+                /// cái này chỉ là thông báo kết quả
+                if (bSuccess)
+                {
+                    MessageBox.Show("Tạo bản ghi mới thành công!");
+                }
+                else
+                {
+                    MessageBox.Show("Không thể tạo bản ghi!\n\nMã lỗi 100x000012");
+                }
+            }
         }
 
         private void button2_LamMoi_Click(object sender, EventArgs e)
@@ -229,95 +460,52 @@ namespace QuanLyNhanSu.GUI
         {
             try
             {
-                int itam = 0;
                 bool bSuccess = false;
 
                 switch (_tablename)
                 {
                     case MyStruct.MyTableName.DUAN:
                         GUI.MyStruct.DUAN da = new MyStruct.DUAN();
-                        da.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
-                        da.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENDA"));
-                        da.TENDA = string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text;
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"));
-                        da.DIADIEM = string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text;
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"TONGSOGIO"));
-                        da.TONGSOGIO = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
-
+                        // gán giá trị từ textbox vào biến
+                        da = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.DUAN;
                         bSuccess = GUI.Update.DUAN.UpdateOneRecord(da);
                         break;
+
                     case MyStruct.MyTableName.LUONG:
                         MyStruct.LUONG lg = new MyStruct.LUONG();
-                        lg.BACLUONG = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"BACLUONG"].Value.ToString());
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"LUONGCOBAN"));
-                        lg.LUONGCOBAN = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOLUONG"));
-                        lg.HESOLUONG = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"HESOPHUCAP"));
-                        lg.HESOPHUCAP = float.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
-
+                        // gán giá trị từ textbox vào biến
+                        lg = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.LUONG;
                         bSuccess = GUI.Update.LUONG.UpdateOneRecord(lg);
                         break;
+
                     case MyStruct.MyTableName.NHANVIEN:
                         MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
-                        nv.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
-                        nv.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENNV"));
-                        nv.TENNV = ltextbox[itam].Text;
-
-                        itam = llabel.FindIndex(n => string.Equals(n.Text, @"NGAYSINH"));
-                        string stam = string.IsNullOrWhiteSpace(ltextbox[itam].Text)
-                                        ? new DateTime(2000,1,1).ToShortDateString()
-                                        : ltextbox[itam].Text;
-                        nv.NGAYSINH = DateTime.Parse(stam);
-
-                        nv.GIOITINH = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"GIOITINH"))].Text;
-                        nv.MA_NGS = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MA_NGS"))].Text);
-                        nv.BACLUONG = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"))].Text);
-                        nv.DIACHI = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIACHI"))].Text;
-                        nv.ACCOUNT = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"))].Text;
-
+                        // gán giá trị từ textbox vào biến
+                        nv = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.NHANVIEN;
                         bSuccess = GUI.Update.NHANVIEN.UpdateOneRecord(nv);
                         break;
+
                     case MyStruct.MyTableName.PHANCONG:
                         MyStruct.PHANCONG pc = new MyStruct.PHANCONG();
-                        pc.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
-                        pc.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
-
-                        pc.SOGIO = float.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"SOGIO"))].Text);
-
+                        // gán giá trị từ textbox vào biến
+                        pc = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.PHANCONG;
                         bSuccess = GUI.Update.PHANCONG.UpdateOneRecord(pc);
                         break;
+
                     case MyStruct.MyTableName.PHONGBAN:
                         MyStruct.PHONGBAN pb = new MyStruct.PHONGBAN();
-                        pb.MAPB = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MAPB"].Value.ToString());
-                        pb.TENPB = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"TENPB"))].Text;
-                        pb.MATP = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MATP"))].Text);
-                        pb.DIADIEM = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"))].Text;
-                        pb.NGAYNC = DateTime.Parse(DateTime.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"NGAYNC"))].Text).ToShortDateString());
-
+                        // gán giá trị từ textbox vào biến
+                        pb = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.PHONGBAN;
                         bSuccess = GUI.Update.PHONGBAN.UpdateOneRecord(pb);
                         break;
+
                     case MyStruct.MyTableName.TAIKHOAN:
                         MyStruct.TAIKHOAN tk = new MyStruct.TAIKHOAN();
-                        tk.ACCOUNT = this.dataGridView1.SelectedRows[0].Cells[@"ACCOUNT"].Value.ToString();
-                        tk.PASSWORD = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"PASSWORD"))].Text;
-                        tk.ACCESS = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCESS"))].Text;
-
+                        // gán giá trị từ textbox vào biến
+                        tk = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.TAIKHOAN;
                         bSuccess = GUI.Update.TAIKHOAN.UpdateOneRecord(tk);
                         break;
+
                     default:
                         break;
                 }
