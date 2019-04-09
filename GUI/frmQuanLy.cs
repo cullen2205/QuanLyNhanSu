@@ -909,5 +909,57 @@ namespace QuanLyNhanSu.GUI
             GUI.frmLogin.fmain.Show();
             this.Dispose();
         }
+
+        /// <summary>
+        /// 
+        /// Hàm tìm kiếm, bôi đậm kết quả đầu tiên tìm được
+        /// 
+        /// </summary>
+        /// <param name="strSearch"></param>
+        /// <returns></returns>
+        private bool Find(string strSearch)
+        {
+            for (int j = 0; j < this.dataGridView1.ColumnCount; ++j)
+            {
+                for (int i = 0; i < this.dataGridView1.RowCount; ++i)
+                {
+                    try
+                    {
+                        if (this.dataGridView1.Rows[i].Cells[j].Value.ToString() == strSearch)
+                        {
+                            //dataGridView1.Rows[row].Selected = true;
+                            this.dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                            return true;
+                        }
+                        if (3 <= j && j <= 7)
+                        {
+                            j = 7;
+                            break;
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// Click vào nút tìm kiếm
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_TimKiem_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.textBox1.Text))
+            {
+                Find(this.textBox1.Text);
+            }
+        }
     }
 }
