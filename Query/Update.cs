@@ -47,6 +47,41 @@ namespace QuanLyNhanSu.GUI
         }
         public static class DUAN
         {
+            public static bool UpdateAllRecord_HaveTable(MyStruct.DUAN.enumStruct _NameTable, string _Value)
+            {
+                try
+                {
+                    switch (_NameTable)
+                    {
+                        case MyStruct.DUAN.enumStruct.MADA:
+                        case MyStruct.DUAN.enumStruct.MAPB:
+                        case MyStruct.DUAN.enumStruct.TONGSOGIO:
+                            cmd.CommandText = @"update DUAN set " + _NameTable + " = " + _Value;
+
+                            break;
+
+                        case MyStruct.DUAN.enumStruct.TENDA:
+                        case MyStruct.DUAN.enumStruct.DIADIEM:
+                            cmd.CommandText = @"update NHANVIEN set " + _NameTable + " = N'" + _Value + "'";
+                            break;
+
+                        default:
+                            return false;
+                    }
+                    conn.Open();
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                    conn.Close();
+                    return true;
+                }
+                catch
+                {
+                    MessageBox.Show("Cant update!");
+                    conn.Close();
+                    return false;
+                }
+            }
             public static bool UpdateOneRecord(MyStruct.DUAN _newValue)
             {
                 try
@@ -122,6 +157,46 @@ namespace QuanLyNhanSu.GUI
         }
         public static class NHANVIEN
         {
+            public static bool UpdateAllRecord_HaveTableX(MyStruct.NHANVIEN.enumStruct _NameTable, string _Value)
+            {
+                try
+                {
+                    switch (_NameTable)
+                    {
+                        case MyStruct.NHANVIEN.enumStruct.MANV:
+                        case MyStruct.NHANVIEN.enumStruct.MAPB:
+                        case MyStruct.NHANVIEN.enumStruct.MA_NGS:
+                        case MyStruct.NHANVIEN.enumStruct.BACLUONG:
+                            cmd.CommandText = @"update NHANVIEN set " + _NameTable + " = " + _Value;
+                            break;
+
+                        case MyStruct.NHANVIEN.enumStruct.TENNV:
+                        case MyStruct.NHANVIEN.enumStruct.GIOITINH:
+                        case MyStruct.NHANVIEN.enumStruct.DIACHI:
+                        case MyStruct.NHANVIEN.enumStruct.ACCOUNT:
+                        case MyStruct.NHANVIEN.enumStruct.NGAYSINH:
+                            cmd.CommandText = @"update NHANVIEN set " + _NameTable + " = N'" + _Value + "'";
+                            break;
+
+                        default:
+                            return false;
+                    }
+                    
+
+                    conn.Open();
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                    conn.Close();
+                    return true;
+                }
+                catch
+                {
+                    MessageBox.Show("Cant update!");
+                    conn.Close();
+                    return false;
+                }
+            }
             public static bool UpdateOneRecord(MyStruct.NHANVIEN _newValue)
             {
                 try

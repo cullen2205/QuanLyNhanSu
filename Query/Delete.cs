@@ -94,7 +94,7 @@ namespace QuanLyNhanSu.GUI
                             cmd.CommandText += @"MADA = " + int.Parse(_value);
                             break;
                         case MyStruct.PHANCONG.enumStruct.SOGIO:
-                            cmd.CommandText += @"SOGIO = " + int.Parse(_value);
+                            cmd.CommandText += @"SOGIO = " + float.Parse(_value);
                             break;
                         default:
                             return false;

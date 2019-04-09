@@ -21,7 +21,7 @@ namespace QuanLyNhanSu.GUI
         private bool FirstLoadDataGridViews = false;
 
         // Kiểu bảng nào truyền vào
-        private GUI.MyStruct.MyTableName _tablename = new MyStruct.MyTableName();
+        private GUI.MyStruct.MyTableName eNameTable = new MyStruct.MyTableName();
         
 
 
@@ -32,7 +32,7 @@ namespace QuanLyNhanSu.GUI
             this.MaximumSize = this.MinimumSize = new Size(1100, 550);
             this.dataGridView1.ReadOnly = true;
 
-            _tablename = nameTable;
+            eNameTable = nameTable;
         }
 
         /// <summary>
@@ -209,9 +209,9 @@ namespace QuanLyNhanSu.GUI
         /// <param name="e"></param>
         private void QuanLy_Load(object sender, EventArgs e)
         {
-            this.Text = @"Quản lý " + _tablename.ToString();
+            this.Text = @"Quản lý " + eNameTable.ToString();
             EditMode(true);
-            GUI.FillTo.DataGridViews(_tablename.ToString(), ref this.dataGridView1);
+            GUI.FillTo.DataGridViews(eNameTable.ToString(), ref this.dataGridView1);
             FirstLoadDataGridViews = true;
 
             _locationNextTextBox = this.groupBox3.Location;
@@ -323,7 +323,7 @@ namespace QuanLyNhanSu.GUI
             StateAll_ListTextBox(ref ltextbox, true);
 
             // Chỉnh những dòng nào ko được phép sửa (VD: Khoá chính)
-            switch (_tablename)
+            switch (eNameTable)
             {
                 case MyStruct.MyTableName.DUAN:
                 case MyStruct.MyTableName.LUONG:
@@ -391,7 +391,7 @@ namespace QuanLyNhanSu.GUI
                 StateAll_ListDateTimePicker(ref ldatetimepicker, true);
 
                 // Chỉnh những dòng nào ko được phép sửa (VD: Khoá chính) + tự động cấp mã cho bản ghi mới
-                switch (_tablename)
+                switch (eNameTable)
                 {
                     case MyStruct.MyTableName.DUAN:
                         ltextbox[0].Text = GUI.Insert.DUAN.GetNextIndex().ToString();
@@ -425,7 +425,7 @@ namespace QuanLyNhanSu.GUI
 
                 // cái này để lưu bản ghi đã nhập vào trong Database nè
                 bool bSuccess = false;
-                switch (_tablename)
+                switch (eNameTable)
                 {
                     case MyStruct.MyTableName.DUAN:
                         MyStruct.DUAN da = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.DUAN;
@@ -492,7 +492,7 @@ namespace QuanLyNhanSu.GUI
         /// <param name="e"></param>
         private void button2_LamMoi_Click(object sender, EventArgs e)
         {
-            GUI.FillTo.DataGridViews(_tablename.ToString(), ref this.dataGridView1);
+            GUI.FillTo.DataGridViews(eNameTable.ToString(), ref this.dataGridView1);
         }
 
         /// <summary>
@@ -532,10 +532,304 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// Hàm xoá bản ghi, sẽ xoá các bản ghi liên quan nếu các bảng liên quan là lấy giá trị của bản ghi hiện tại là khoá chính
+        /// Còn không, đổi giá trị thuộc tính của bản ghi liên kết tới bản ghi hiện tại là null
+        /// 
+        /// </summary>
+        /// <param name="_NameTable"></param>
+        /// <param name="_Value"></param>
+        private void DeleteRecord(MyStruct.MyTableName _NameTable, object _Value)
+        {
+            string messageError = "";
+            switch (_NameTable)
+            {
+                case MyStruct.MyTableName.DUAN:
+                    MyStruct.DUAN da = _Value as MyStruct.DUAN;
+                    if (!GUI.Delete.DUAN.DeleteRecord_Primary(da.MADA))
+                    {
+                        if (DialogResult.OK == 
+                                MessageBox.Show(
+                                    "Không thể xoá bản ghi!\nBản ghi hiện tại liên kết với các bản ghi trong Table:\n" 
+                                    +"- PHANCONG\n\nBạn có muốn xoá tất cả các bản ghi liên kết với bảng hiện tại không?",
+                                    "Cảnh báo xoá", MessageBoxButtons.OKCancel))
+                        {
+                            if (!GUI.Delete.PHANCONG.DeleteAllRecord_HaveTableX(MyStruct.PHANCONG.enumStruct.MADA, 
+                                    da.MADA.ToString()))
+                            {
+                                messageError += "\n\n- PHANCONG";
+                            }
+
+                            if (!GUI.Delete.DUAN.DeleteRecord_Primary(da.MADA))
+                            {
+                                messageError += "\n\n- DUAN";
+                            }
+
+                            // thông báo lỗi
+                            if (!string.IsNullOrEmpty(messageError))
+                            {
+                                MessageBox.Show("Không thể sửa hoặc xoá bản ghi trong table:" + messageError);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- PHANCONG\n- DUAN");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- DUAN");
+                    }
+                    break;
+
+                case MyStruct.MyTableName.LUONG:
+                    MyStruct.LUONG lg = _Value as MyStruct.LUONG;
+                    if (!GUI.Delete.LUONG.DeleteRecord_Primary(lg.BACLUONG))
+                    {
+                        if (DialogResult.OK ==
+                                MessageBox.Show(
+                                    "Không thể xoá bản ghi!\nBản ghi hiện tại liên kết với các bản ghi trong Table:\n"
+                                    + "- NHANVIEN\n\nBạn có muốn sửa tất cả các bản ghi liên kết với bảng hiện tại không?",
+                                    "Cảnh báo sửa", MessageBoxButtons.OKCancel))
+                        {
+                            if (!GUI.Update.NHANVIEN.UpdateAllRecord_HaveTableX(
+                                    MyStruct.NHANVIEN.enumStruct.BACLUONG, "null"))
+                            {
+                                messageError += "\n\n- NHANVIEN";
+                            }
+
+                            if (!GUI.Delete.LUONG.DeleteRecord_Primary(lg.BACLUONG))
+                            {
+                                messageError += "\n\n- LUONG";
+                            }
+
+                            // thông báo lỗi
+                            if (!string.IsNullOrEmpty(messageError))
+                            {
+                                MessageBox.Show("Không thể sửa hoặc xoá bản ghi trong table:" + messageError);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- NHANVIEN\n- LUONG");
+                            }
+                        }
+                    }
+                    break;
+
+                case MyStruct.MyTableName.NHANVIEN:
+                    MyStruct.NHANVIEN nv = _Value as MyStruct.NHANVIEN;
+                    if (!GUI.Delete.NHANVIEN.DeleteRecord_Primary(nv.MANV))
+                    {
+                        if (DialogResult.OK ==
+                                MessageBox.Show(
+                                    "Không thể xoá bản ghi!\nBản ghi hiện tại liên kết với các bản ghi trong Table:\n"
+                                    + "- PHANCONG\n\nBạn có muốn xoá tất cả các bản ghi liên kết với bảng hiện tại không?",
+                                    "Cảnh báo xoá", MessageBoxButtons.OKCancel))
+                        {
+                            if (!GUI.Delete.PHANCONG.DeleteAllRecord_HaveTableX(MyStruct.PHANCONG.enumStruct.MANV,nv.MANV.ToString()))
+                            {
+                                messageError += "\n\n- PHANCONG";
+                            }
+
+                            if (!GUI.Delete.NHANVIEN.DeleteRecord_Primary(nv.MANV))
+                            {
+                                messageError += "\n\n- NHANVIEN";
+                            }
+
+                            // thông báo lỗi
+                            if (!string.IsNullOrEmpty(messageError))
+                            {
+                                MessageBox.Show("Không thể xoá bản ghi trong table:" + messageError);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- PHANCONG\n- NHANVIEN");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- NHANVIEN");
+                    }
+                    break;
+
+                case MyStruct.MyTableName.PHANCONG:
+                    MyStruct.PHANCONG pc = _Value as MyStruct.PHANCONG;
+                    if (!GUI.Delete.PHANCONG.DeleteRecord_Primary(pc.MANV, pc.MADA))
+                    {
+                        #region để dành nâng cấp nếu thay đổi database và có table liên kết đến bảng PHANCONG
+
+                        /*
+                        //if (DialogResult.OK ==
+                        //        MessageBox.Show(
+                        //            "Không thể xoá bản ghi!\nBản ghi hiện tại liên kết với các bản ghi trong Table:\n"
+                        //            + "- ?? :D ??\n\nBạn có muốn xoá tất cả các bản ghi liên kết với bảng hiện tại không?",
+                        //            "Cảnh báo xoá", MessageBoxButtons.OKCancel))
+                        //{
+                        //    if (!GUI.Delete.PHANCONG.DeleteAllRecord_HaveTableX(MyStruct.PHANCONG.enumStruct.MADA,
+                        //            pc.MADA.ToString()))
+                        //    {
+                        //        messageError += "\n\n- PHANCONG";
+                        //    }
+
+                        //    if (!GUI.Delete.DUAN.DeleteRecord_Primary(pc.MADA))
+                        //    {
+                        //        messageError += "\n\n- DUAN";
+                        //    }
+
+                        //    // thông báo lỗi
+                        //    if (!string.IsNullOrEmpty(messageError))
+                        //    {
+                        //        MessageBox.Show("Không thể xoá bản ghi trong table:" + messageError);
+                        //    }
+                        //    else
+                        //    {
+                        //        MessageBox.Show("Xoá bản ghi thành công, table:\n\n- PHANCONG\n- DUAN");
+                        //    }
+                        //}
+                        */
+                        #endregion
+
+                        MessageBox.Show("Không thể xoá bản ghi!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- PHANCONG");
+                    }
+                    break;
+
+                case MyStruct.MyTableName.PHONGBAN:
+                    MyStruct.PHONGBAN pb = _Value as MyStruct.PHONGBAN;
+                    if (!GUI.Delete.PHONGBAN.DeleteRecord_Primary(pb.MAPB))
+                    {
+                        if (DialogResult.OK ==
+                                MessageBox.Show(
+                                    "Không thể xoá bản ghi!\nBản ghi hiện tại liên kết với các bản ghi trong Table:\n"
+                                    + "- DUAN\n-NHANVIEN\n\nBạn có muốn sửa tất cả các bản ghi liên kết với bảng hiện tại không?",
+                                    "Cảnh báo sửa", MessageBoxButtons.OKCancel))
+                        {
+                            if (!GUI.Update.NHANVIEN.UpdateAllRecord_HaveTableX(MyStruct.NHANVIEN.enumStruct.MAPB, "null"))
+                            {
+                                messageError += "\n\n- NHANVIEN";
+                            }
+
+                            if (!GUI.Update.DUAN.UpdateAllRecord_HaveTable(MyStruct.DUAN.enumStruct.MAPB, "null"))
+                            {
+                                messageError += "\n\n- DUAN";
+                            }
+
+                            if (!GUI.Delete.PHONGBAN.DeleteRecord_Primary(pb.MAPB))
+                            {
+                                messageError += "\n\n- PHONGBAN";
+                            }
+
+                            // thông báo lỗi
+                            if (!string.IsNullOrEmpty(messageError))
+                            {
+                                MessageBox.Show("Không thể xoá bản ghi trong table:" + messageError);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- NHANVIEN\n- DUAN\n- PHONGBAN");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- PHONGBAN");
+                    }
+                    break;
+
+                case MyStruct.MyTableName.TAIKHOAN:
+                    MyStruct.TAIKHOAN tk = _Value as MyStruct.TAIKHOAN;
+                    if (!GUI.Delete.TAIKHOAN.DeleteRecord_Primary(tk.ACCOUNT))
+                    {
+                        if (DialogResult.OK ==
+                                MessageBox.Show(
+                                    "Không thể xoá bản ghi!\nBản ghi hiện tại liên kết với các bản ghi trong Table:\n"
+                                    + "- PHANCONG\n\nBạn có muốn xoá tất cả các bản ghi liên kết với bảng hiện tại không?",
+                                    "Cảnh báo xoá", MessageBoxButtons.OKCancel))
+                        {
+                            if (!GUI.Update.NHANVIEN.UpdateAllRecord_HaveTableX(MyStruct.NHANVIEN.enumStruct.ACCOUNT, "null"))
+                            {
+                                messageError += "\n\n- NHANVIEN";
+                            }
+
+                            if (!GUI.Delete.TAIKHOAN.DeleteRecord_Primary(tk.ACCOUNT))
+                            {
+                                messageError += "\n\n- TAIKHOAN";
+                            }
+
+                            // thông báo lỗi
+                            if (!string.IsNullOrEmpty(messageError))
+                            {
+                                MessageBox.Show("Không thể xoá bản ghi trong table:" + messageError);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Xoá bản ghi thành công, table:\n\n- NHANVIEN\n- TAIKHOAN");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xoá (sửa) bản ghi thành công, table:\n\n- TAIKHOAN");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// Click vào nút Xoá
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button6_Xoa_Click(object sender, EventArgs e)
         {
-            button6_Xoa.Text = "Chức năng này hiện chưa được nâp cấp";
-            button6_Xoa.Enabled = false;
+            //button6_Xoa.Text = "Chức năng này hiện chưa được nâp cấp";
+            //button6_Xoa.Enabled = false;
+            switch (eNameTable)
+            {
+                case MyStruct.MyTableName.DUAN:
+                    MyStruct.DUAN da = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.DUAN;
+                    DeleteRecord(eNameTable, da);
+                    break;
+
+                case MyStruct.MyTableName.LUONG:
+                    MyStruct.LUONG lg = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.LUONG) as MyStruct.LUONG;
+                    DeleteRecord(eNameTable, lg);
+                    break;
+
+                case MyStruct.MyTableName.NHANVIEN:
+                    MyStruct.NHANVIEN nv = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.NHANVIEN) as MyStruct.NHANVIEN;
+                    DeleteRecord(eNameTable, nv);
+                    break;
+
+                case MyStruct.MyTableName.PHANCONG:
+                    MyStruct.PHANCONG pc = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.PHANCONG) as MyStruct.PHANCONG;
+                    DeleteRecord(eNameTable, pc);
+                    break;
+
+                case MyStruct.MyTableName.PHONGBAN:
+                    MyStruct.PHONGBAN pb = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.PHONGBAN) as MyStruct.PHONGBAN;
+                    DeleteRecord(eNameTable, pb);
+                    break;
+
+                case MyStruct.MyTableName.TAIKHOAN:
+                    MyStruct.TAIKHOAN tk = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.TAIKHOAN) as MyStruct.TAIKHOAN;
+                    DeleteRecord(eNameTable, tk);
+                    break;
+
+                default:
+                    return;
+            }
+
         }
         private void button5_LuuThayDoi_Click(object sender, EventArgs e)
         {
@@ -543,7 +837,7 @@ namespace QuanLyNhanSu.GUI
             {
                 bool bSuccess = false;
 
-                switch (_tablename)
+                switch (eNameTable)
                 {
                     case MyStruct.MyTableName.DUAN:
                         GUI.MyStruct.DUAN da = new MyStruct.DUAN();
