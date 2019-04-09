@@ -12,9 +12,13 @@ namespace QuanLyNhanSu.GUI
 {
     public partial class frmLogin : Form
     {
+        public static GUI.frmMain fmain;
+
         public frmLogin()
         {
             InitializeComponent();
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -24,16 +28,46 @@ namespace QuanLyNhanSu.GUI
                 MessageBox.Show("Tài khoản hoặc mật khẩu trống, xin hãy kiểm tra lại.");
                 return;
             }
-            MyStruct.TAIKHOAN taikhoan = GUI.Select.TAIKHOAN.GetAll(textBoxUser.Text);
+            MyStruct.TAIKHOAN taikhoan = GUI.Select.TAIKHOAN.GetTopOneRecord(textBoxUser.Text);
 
+            // Đăng nhập thành công thì nhảy vào
             if (this.textBoxPass.Text == taikhoan.PASSWORD)
             {
-                // Thành công
-                MessageBox.Show("Đăng nhập thành công.");
+                // MessageBox.Show("Đăng nhập thành công.");
+
+                // Phân quyền
+
+                this.Hide();
+                
+                fmain = new frmMain(taikhoan);
+                fmain.Show();
             }
             else
             {
                 MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu.");
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void textBoxUser_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.textBoxPass.Focus();
+                this.textBoxPass.SelectAll();
+                textBoxPass_KeyDown(sender, new KeyEventArgs(new Keys()));
+            }
+        }
+
+        private void textBoxPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnLogin_Click(sender, e);
             }
         }
     }
