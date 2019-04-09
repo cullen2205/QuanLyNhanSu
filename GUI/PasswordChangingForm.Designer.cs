@@ -189,8 +189,12 @@
         private System.Windows.Forms.Label UsernameLabel;
         private System.Windows.Forms.TextBox NewPasswordTextbox;
         private System.Windows.Forms.Label label1;
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         private System.Windows.Forms.Button CancelButton;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         private System.Windows.Forms.Button AcceptButton;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         private System.Windows.Forms.GroupBox LoginInforGroupBox;
         private System.Windows.Forms.TextBox RepeatNewPasswordTextbox;
         private System.Windows.Forms.Label label2;
