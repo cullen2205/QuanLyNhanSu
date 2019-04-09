@@ -8,6 +8,16 @@ namespace QuanLyNhanSu.GUI
 {
     public partial class MyStruct
     {
+        public enum MyTableName
+        {
+            DUAN,
+            LUONG,
+            NHANVIEN,
+            PHANCONG,
+            PHONGBAN,
+            TAIKHOAN,
+
+        }
         public class DUAN
         {
             //[MADA] [int] NOT NULL,

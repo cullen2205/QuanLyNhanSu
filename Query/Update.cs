@@ -16,7 +16,7 @@ namespace QuanLyNhanSu.GUI
 
         /// <summary>
         /// 
-        /// Do nothing without add string to string
+        /// Do nothing without Add string to string
         /// exaple:
         ///     _root = "update DUAN set "
         ///     list[0] = "MADA = value"
@@ -261,8 +261,8 @@ namespace QuanLyNhanSu.GUI
                     list.Add(_newValue.PASSWORD != null ? "PASSWORD = N'" + _newValue.PASSWORD.ToString() + "'": null);
 
                     cmd.CommandText = Query_AddString(
-                        @"update PHONGBAN set",
-                        @"where ACCOUNT = N'" + _newValue.ACCOUNT + "'",
+                        @"update TAIKHOAN set",
+                        @" where ACCOUNT = N'" + _newValue.ACCOUNT + "'",
                         ref list);
 
                     conn.Open();

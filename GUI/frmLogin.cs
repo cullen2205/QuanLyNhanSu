@@ -12,6 +12,8 @@ namespace QuanLyNhanSu.GUI
 {
     public partial class frmLogin : Form
     {
+        public static GUI.frmMain fmain;
+
         public frmLogin()
         {
             InitializeComponent();
@@ -28,15 +30,17 @@ namespace QuanLyNhanSu.GUI
             }
             MyStruct.TAIKHOAN taikhoan = GUI.Select.TAIKHOAN.GetTopOneRecord(textBoxUser.Text);
 
+            // Đăng nhập thành công thì nhảy vào
             if (this.textBoxPass.Text == taikhoan.PASSWORD)
             {
-                // Thành công
-                MessageBox.Show("Đăng nhập thành công.");
+                // MessageBox.Show("Đăng nhập thành công.");
 
+                // Phân quyền
 
-
-                GUI.frmNhanVien fr = new frmNhanVien();
-                fr.Show();
+                this.Hide();
+                
+                fmain = new frmMain(taikhoan);
+                fmain.Show();
             }
             else
             {

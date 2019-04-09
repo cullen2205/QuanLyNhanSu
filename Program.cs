@@ -16,7 +16,12 @@ namespace QuanLyNhanSu
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new QuanLyNhanSu.GUI.frmNhanVien());
+
+
+            flogin = new GUI.frmLogin();
+
+            Application.Run(flogin);
         }
+        public static GUI.frmLogin flogin;
     }
 }

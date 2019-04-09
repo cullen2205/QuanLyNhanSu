@@ -15,20 +15,18 @@ C:\Users\Kieu Thuong\Desktop\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.cs
 C:\Users\Kieu Thuong\Desktop\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.exe
 C:\Users\Kieu Thuong\Desktop\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.pdb
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.exe.config
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.exe
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.pdb
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.csprojResolveAssemblyReference.cache
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.exe
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.pdb
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmDuAn.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmLogin.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmMain.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmNhanVien.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmPhanCong.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmPhongBan.resources
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.LoginSQL.resources
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.frmQuanLy.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.Properties.Resources.resources
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.csproj.GenerateResource.Cache
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.exe
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.pdb
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu - Copy\QuanLyNhanSu\bin\Debug\QuanLyNhanSu.exe.config
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu - Copy\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.exe
-E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu - Copy\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.pdb
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.exe
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.pdb
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.csprojResolveAssemblyReference.cache
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.PasswordChangingForm.resources
