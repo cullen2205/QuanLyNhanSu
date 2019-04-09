@@ -18,10 +18,10 @@ namespace QuanLyNhanSu
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            fmain = new GUI.frmMain();
+            flogin = new GUI.frmLogin();
 
-            Application.Run(fmain);
+            Application.Run(flogin);
         }
-        public static GUI.frmMain fmain;
+        public static GUI.frmLogin flogin;
     }
 }

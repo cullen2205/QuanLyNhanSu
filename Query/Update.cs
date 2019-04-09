@@ -261,8 +261,8 @@ namespace QuanLyNhanSu.GUI
                     list.Add(_newValue.PASSWORD != null ? "PASSWORD = N'" + _newValue.PASSWORD.ToString() + "'": null);
 
                     cmd.CommandText = Query_AddString(
-                        @"update PHONGBAN set",
-                        @"where ACCOUNT = N'" + _newValue.ACCOUNT + "'",
+                        @"update TAIKHOAN set",
+                        @" where ACCOUNT = N'" + _newValue.ACCOUNT + "'",
                         ref list);
 
                     conn.Open();

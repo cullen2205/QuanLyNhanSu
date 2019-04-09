@@ -606,13 +606,13 @@ namespace QuanLyNhanSu.GUI
 
         private void button8_Thoat_Click(object sender, EventArgs e)
         {
-            Program.fmain.Show();
+            GUI.frmLogin.fmain.Show();
             this.Dispose();
         }
 
         private void frmQuanLy_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.fmain.Show();
+            GUI.frmLogin.fmain.Show();
             this.Dispose();
         }
     }

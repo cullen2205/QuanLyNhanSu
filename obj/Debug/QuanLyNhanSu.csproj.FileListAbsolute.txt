@@ -29,3 +29,4 @@ E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\o
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.exe
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.pdb
 E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.csprojResolveAssemblyReference.cache
+E:\User_KEN\Documents\MonHocMTA\ThucTapNhom\Thương\QuanLyNhanSu\QuanLyNhanSu\obj\Debug\QuanLyNhanSu.GUI.PasswordChangingForm.resources

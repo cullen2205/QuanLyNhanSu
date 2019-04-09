@@ -132,20 +132,23 @@
             // btnDangXuat
             // 
             this.btnDangXuat.Name = "btnDangXuat";
-            this.btnDangXuat.Size = new System.Drawing.Size(146, 22);
+            this.btnDangXuat.Size = new System.Drawing.Size(152, 22);
             this.btnDangXuat.Text = "Đăng xuất";
+            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
             // 
             // btnDoiMatKhau
             // 
             this.btnDoiMatKhau.Name = "btnDoiMatKhau";
-            this.btnDoiMatKhau.Size = new System.Drawing.Size(146, 22);
+            this.btnDoiMatKhau.Size = new System.Drawing.Size(152, 22);
             this.btnDoiMatKhau.Text = "Đổi Mật Khẩu";
+            this.btnDoiMatKhau.Click += new System.EventHandler(this.btnDoiMatKhau_Click);
             // 
             // btnThoatChuongTrinh
             // 
             this.btnThoatChuongTrinh.Name = "btnThoatChuongTrinh";
             this.btnThoatChuongTrinh.Size = new System.Drawing.Size(50, 20);
             this.btnThoatChuongTrinh.Text = "Thoát";
+            this.btnThoatChuongTrinh.Click += new System.EventHandler(this.btnThoatChuongTrinh_Click);
             // 
             // label1
             // 
@@ -177,6 +180,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "frmMain";
             this.Text = "Quản Lý Nhân Sự";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
