@@ -41,7 +41,10 @@
             this.btnDangXuat = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDoiMatKhau = new System.Windows.Forms.ToolStripMenuItem();
             this.btnThoatChuongTrinh = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -108,13 +111,13 @@
             // btnBaoLoi
             // 
             this.btnBaoLoi.Name = "btnBaoLoi";
-            this.btnBaoLoi.Size = new System.Drawing.Size(152, 22);
+            this.btnBaoLoi.Size = new System.Drawing.Size(111, 22);
             this.btnBaoLoi.Text = "Báo lỗi";
             // 
             // btnTacGia
             // 
             this.btnTacGia.Name = "btnTacGia";
-            this.btnTacGia.Size = new System.Drawing.Size(152, 22);
+            this.btnTacGia.Size = new System.Drawing.Size(111, 22);
             this.btnTacGia.Text = "Tác giả";
             // 
             // btnHeThong
@@ -129,13 +132,13 @@
             // btnDangXuat
             // 
             this.btnDangXuat.Name = "btnDangXuat";
-            this.btnDangXuat.Size = new System.Drawing.Size(152, 22);
+            this.btnDangXuat.Size = new System.Drawing.Size(146, 22);
             this.btnDangXuat.Text = "Đăng xuất";
             // 
             // btnDoiMatKhau
             // 
             this.btnDoiMatKhau.Name = "btnDoiMatKhau";
-            this.btnDoiMatKhau.Size = new System.Drawing.Size(152, 22);
+            this.btnDoiMatKhau.Size = new System.Drawing.Size(146, 22);
             this.btnDoiMatKhau.Text = "Đổi Mật Khẩu";
             // 
             // btnThoatChuongTrinh
@@ -144,16 +147,39 @@
             this.btnThoatChuongTrinh.Size = new System.Drawing.Size(50, 20);
             this.btnThoatChuongTrinh.Text = "Thoát";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label1.Location = new System.Drawing.Point(27, 81);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 15);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Kiều Thương - HTTT15";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::QuanLyNhanSu.Properties.Resources.IMG_1755;
+            this.pictureBox1.Location = new System.Drawing.Point(202, 27);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(123, 121);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(346, 160);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "frmMain";
             this.Text = "Quản Lý Nhân Sự";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,5 +200,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnQuanLyNhanVien;
         private System.Windows.Forms.ToolStripMenuItem btnQuanLyPhanCong;
         private System.Windows.Forms.ToolStripMenuItem btnQuanLyPhongBan;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

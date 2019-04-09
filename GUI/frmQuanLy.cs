@@ -89,7 +89,8 @@ namespace QuanLyNhanSu.GUI
             {
                 case MyStruct.MyTableName.DUAN:
                     GUI.MyStruct.DUAN da = new MyStruct.DUAN();
-                    da.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MADA"));
+                    da.MADA = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
 
                     itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
                     da.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
@@ -106,7 +107,8 @@ namespace QuanLyNhanSu.GUI
                     return da;
                 case MyStruct.MyTableName.LUONG:
                     MyStruct.LUONG lg = new MyStruct.LUONG();
-                    lg.BACLUONG = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"BACLUONG"].Value.ToString());
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"));
+                    lg.BACLUONG = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
 
                     itam = llabel.FindIndex(n => string.Equals(n.Text, @"LUONGCOBAN"));
                     lg.LUONGCOBAN = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
@@ -120,7 +122,8 @@ namespace QuanLyNhanSu.GUI
                     return lg;
                 case MyStruct.MyTableName.NHANVIEN:
                     MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
-                    nv.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MANV"));
+                    nv.MANV = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
 
                     itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
                     nv.MAPB = int.Parse(string.IsNullOrWhiteSpace(ltextbox[itam].Text) ? null : ltextbox[itam].Text);
@@ -134,35 +137,62 @@ namespace QuanLyNhanSu.GUI
                                     : ltextbox[itam].Text;
                     nv.NGAYSINH = DateTime.Parse(stam);
 
-                    nv.GIOITINH = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"GIOITINH"))].Text;
-                    nv.MA_NGS = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MA_NGS"))].Text);
-                    nv.BACLUONG = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"))].Text);
-                    nv.DIACHI = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIACHI"))].Text;
-                    nv.ACCOUNT = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"))].Text;
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"GIOITINH"));
+                    nv.GIOITINH = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MA_NGS"));
+                    nv.MA_NGS = int.Parse(ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"BACLUONG"));
+                    nv.BACLUONG = int.Parse(ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"DIACHI"));
+                    nv.DIACHI = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"));
+                    nv.ACCOUNT = ltextbox[itam].Text;
                     
                     return nv;
                 case MyStruct.MyTableName.PHANCONG:
                     MyStruct.PHANCONG pc = new MyStruct.PHANCONG();
-                    pc.MANV = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MANV"].Value.ToString());
-                    pc.MADA = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MADA"].Value.ToString());
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MANV"));
+                    pc.MANV = int.Parse(ltextbox[itam].Text);
 
-                    pc.SOGIO = float.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"SOGIO"))].Text);
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MADA"));
+                    pc.MADA = int.Parse(ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"SOGIO"));
+                    pc.SOGIO = float.Parse(ltextbox[itam].Text);
                     
                     return pc;
                 case MyStruct.MyTableName.PHONGBAN:
                     MyStruct.PHONGBAN pb = new MyStruct.PHONGBAN();
-                    pb.MAPB = int.Parse(this.dataGridView1.SelectedRows[0].Cells[@"MAPB"].Value.ToString());
-                    pb.TENPB = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"TENPB"))].Text;
-                    pb.MATP = int.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"MATP"))].Text);
-                    pb.DIADIEM = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"))].Text;
-                    pb.NGAYNC = DateTime.Parse(DateTime.Parse(ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"NGAYNC"))].Text).ToShortDateString());
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MAPB"));
+                    pb.MAPB = int.Parse(ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"TENPB"));
+                    pb.TENPB = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"MATP"));
+                    pb.MATP = int.Parse(ltextbox[itam].Text);
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"DIADIEM"));
+                    pb.DIADIEM = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"NGAYNC"));
+                    pb.NGAYNC = DateTime.Parse(DateTime.Parse(ltextbox[itam].Text).ToShortDateString());
                     
                     return pb;
                 case MyStruct.MyTableName.TAIKHOAN:
                     MyStruct.TAIKHOAN tk = new MyStruct.TAIKHOAN();
-                    tk.ACCOUNT = this.dataGridView1.SelectedRows[0].Cells[@"ACCOUNT"].Value.ToString();
-                    tk.PASSWORD = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"PASSWORD"))].Text;
-                    tk.ACCESS = ltextbox[llabel.FindIndex(n => string.Equals(n.Text, @"ACCESS"))].Text;
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"ACCOUNT"));
+                    tk.ACCOUNT = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"PASSWORD"));
+                    tk.PASSWORD = ltextbox[itam].Text;
+
+                    itam = llabel.FindIndex(n => string.Equals(n.Text, @"ACCESS"));
+                    tk.ACCESS = ltextbox[itam].Text;
                     
                     return tk;
                 default:
