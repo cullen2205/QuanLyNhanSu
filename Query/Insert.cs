@@ -163,7 +163,7 @@ namespace QuanLyNhanSu.GUI
                     if (_new.NGAYSINH != null)
                     {
                         tam1 += @", NGAYSINH";
-                        tam2 += @", N'" + (DateTime.Parse(_new.NGAYSINH.ToString())).ToShortDateString().ToString() + "'";
+                        tam2 += @", N'" + (DateTime.Parse(_new.NGAYSINH.ToString())).ToShortDateString() + "'";
                     }
                     if (!string.IsNullOrEmpty(_new.GIOITINH))
                     {
@@ -278,7 +278,7 @@ namespace QuanLyNhanSu.GUI
                     if (_new.NGAYNC != null)
                     {
                         tam1 += @", NGAYNC";
-                        tam2 += @", N'" + (DateTime.Parse(_new.NGAYNC.ToString())).ToShortDateString().ToString() + "'";
+                        tam2 += @", N'" + (DateTime.Parse(_new.NGAYNC.ToString())).ToShortDateString() + "'";
                     }
                     tam1 += ") values (" + _new.MAPB + tam2 + ")";
 

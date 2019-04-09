@@ -170,6 +170,13 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// Thằng này sẽ được gọi đến khi form bắt đầu chạy
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void QuanLy_Load(object sender, EventArgs e)
         {
             this.Text = @"Quản lý " + _tablename.ToString();
@@ -225,7 +232,7 @@ namespace QuanLyNhanSu.GUI
                 ltextbox.Add(tb);
             }
 
-            StateAll_ListDateTimePicker(ref ldatetimepicker, true);
+            StateAll_ListDateTimePicker(ref ldatetimepicker, false);
 
             return;
         }
@@ -273,6 +280,13 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// Khi click vào nút Thay đổi
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button4_ThayDoi_Click(object sender, EventArgs e)
         {
             EditMode(false);
@@ -302,10 +316,21 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// Khi click vào nút Huỷ bỏ
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button7_HuyBo_Click(object sender, EventArgs e)
         {
             EditMode(true);
             StateAll_ListTextBox(ref ltextbox, false);
+            bClickButtonThemYet = false;
+            button3_Them.Text = "Thêm";
+            button4_ThayDoi.Enabled = button6_Xoa.Enabled = true;
+            bIgnoreRowEnter = false;
 
             for (int i = 0; i < ldatetimepicker.Count; i++)
             {
@@ -313,6 +338,11 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// Khi click vào nút Thêm
+        /// 
+        /// </summary>
         private bool bClickButtonThemYet = false;
         private void button3_Them_Click(object sender, EventArgs e)
         {
@@ -322,6 +352,8 @@ namespace QuanLyNhanSu.GUI
                 button3_Them.Text = "Lưu mới";
                 bClickButtonThemYet = true;
                 button4_ThayDoi.Enabled = button5_LuuThayDoi.Enabled = button6_Xoa.Enabled = false;
+                button7_HuyBo.Enabled = true;
+                bIgnoreRowEnter = true;
 
                 // làm rỗng input để điền thông tin mới vào nè
                 this.InitInput_Textbox(ref ltextbox);
@@ -359,6 +391,7 @@ namespace QuanLyNhanSu.GUI
                 bClickButtonThemYet = false;
                 button3_Them.Text = "Thêm";
                 EditMode(true);
+                bIgnoreRowEnter = false;
 
                 // cái này để lưu bản ghi đã nhập vào trong Database nè
                 bool bSuccess = false;
@@ -420,15 +453,32 @@ namespace QuanLyNhanSu.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// Khi click vào nút Làm mới
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_LamMoi_Click(object sender, EventArgs e)
         {
             GUI.FillTo.DataGridViews(_tablename.ToString(), ref this.dataGridView1);
         }
 
+        /// <summary>
+        /// 
+        /// Khi đang mở vào bản ghi
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private bool bIgnoreRowEnter = false;
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            // Có thể dùng biến bIgnoreRowEnter để bỏ qua hàm này
+
             // khi vào một hàng bất kỳ -> in dữ liệu ra textbox
-            if (FirstLoadDataGridViews && e.RowIndex > -1 && e.RowIndex < this.dataGridView1.RowCount)
+            if (!bIgnoreRowEnter && FirstLoadDataGridViews && e.RowIndex > -1 && e.RowIndex < this.dataGridView1.RowCount)
             {
                 try
                 {
@@ -454,7 +504,8 @@ namespace QuanLyNhanSu.GUI
 
         private void button6_Xoa_Click(object sender, EventArgs e)
         {
-            
+            button6_Xoa.Text = "Chức năng này hiện chưa được nâp cấp";
+            button6_Xoa.Enabled = false;
         }
         private void button5_LuuThayDoi_Click(object sender, EventArgs e)
         {
@@ -474,35 +525,35 @@ namespace QuanLyNhanSu.GUI
                     case MyStruct.MyTableName.LUONG:
                         MyStruct.LUONG lg = new MyStruct.LUONG();
                         // gán giá trị từ textbox vào biến
-                        lg = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.LUONG;
+                        lg = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.LUONG) as MyStruct.LUONG;
                         bSuccess = GUI.Update.LUONG.UpdateOneRecord(lg);
                         break;
 
                     case MyStruct.MyTableName.NHANVIEN:
                         MyStruct.NHANVIEN nv = new MyStruct.NHANVIEN();
                         // gán giá trị từ textbox vào biến
-                        nv = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.NHANVIEN;
+                        nv = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.NHANVIEN) as MyStruct.NHANVIEN;
                         bSuccess = GUI.Update.NHANVIEN.UpdateOneRecord(nv);
                         break;
 
                     case MyStruct.MyTableName.PHANCONG:
                         MyStruct.PHANCONG pc = new MyStruct.PHANCONG();
                         // gán giá trị từ textbox vào biến
-                        pc = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.PHANCONG;
+                        pc = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.PHANCONG) as MyStruct.PHANCONG;
                         bSuccess = GUI.Update.PHANCONG.UpdateOneRecord(pc);
                         break;
 
                     case MyStruct.MyTableName.PHONGBAN:
                         MyStruct.PHONGBAN pb = new MyStruct.PHONGBAN();
                         // gán giá trị từ textbox vào biến
-                        pb = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.PHONGBAN;
+                        pb = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.PHONGBAN) as MyStruct.PHONGBAN;
                         bSuccess = GUI.Update.PHONGBAN.UpdateOneRecord(pb);
                         break;
 
                     case MyStruct.MyTableName.TAIKHOAN:
                         MyStruct.TAIKHOAN tk = new MyStruct.TAIKHOAN();
                         // gán giá trị từ textbox vào biến
-                        tk = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.DUAN) as MyStruct.TAIKHOAN;
+                        tk = AddData_FromListTextbox_ToObject(ref ltextbox, MyStruct.MyTableName.TAIKHOAN) as MyStruct.TAIKHOAN;
                         bSuccess = GUI.Update.TAIKHOAN.UpdateOneRecord(tk);
                         break;
 
