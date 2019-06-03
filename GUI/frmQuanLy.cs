@@ -24,7 +24,12 @@ namespace QuanLyNhanSu.GUI
         private GUI.MyStruct.MyTableName eNameTable = new MyStruct.MyTableName();
         
 
-
+        /// <summary>
+        /// 
+        /// Hàm khởi tạo
+        /// 
+        /// </summary>
+        /// <param name="nameTable"></param>
         public frmQuanLy(GUI.MyStruct.MyTableName nameTable)
         {
             InitializeComponent();
@@ -253,7 +258,7 @@ namespace QuanLyNhanSu.GUI
                     ldatetimepicker.Add(dtp);
                     dtp.ValueChanged += new System.EventHandler(this.ChangeValues_DateTimePicker);
 
-
+                    // gán đối tượng vừa tạo vào trong Groupbox
                     this.groupBox3.Controls.Add(dtp);
                 }
 
